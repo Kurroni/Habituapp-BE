@@ -24,17 +24,19 @@ router.post(
   isNotLoggedIn,
   validationLoggin,
   async (req, res, next) => {
-    const { username, password } = req.body;
+    const { username, email, password } = req.body;
 
     try {
       // projection
       const usernameExists = await User.findOne({ username }, 'username');
+      const emailExists = await User.findOne({ email }, 'email');
 
-      if (usernameExists) return next(createError(400));
+
+      if (usernameExists || emailExists) return next(createError(400));
       else {
         const salt = bcrypt.genSaltSync(saltRounds);
         const hashPass = bcrypt.hashSync(password, salt);
-        const newUser = await User.create({ username, password: hashPass });
+        const newUser = await User.create({ username, email, password: hashPass });
         req.session.currentUser = newUser;
         res
           .status(200) //  OK
@@ -81,10 +83,10 @@ router.post('/logout', isLoggedIn, (req, res, next) => {
 });
 
 //  GET    '/private'   --> Only for testing - Same as /me but it returns a message instead
-router.get('/private', isLoggedIn, (req, res, next) => {
-  res
-    .status(200) // OK
-    .json({ message: 'Test - User is logged in' });
-});
+// router.get('/private', isLoggedIn, (req, res, next) => {
+//   res
+//     .status(200) // OK
+//     .json({ message: 'Test - User is logged in' });
+// });
 
 module.exports = router;
