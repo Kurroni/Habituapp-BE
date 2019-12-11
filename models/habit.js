@@ -8,6 +8,6 @@ const habitSchema = new Schema({
     days: [{date:Date, done: Boolean}]
   });
 
-const Habit = mongoose.model('User', userSchema);
+const Habit = mongoose.model('Habit', habitSchema);
 
 module.exports = Habit;

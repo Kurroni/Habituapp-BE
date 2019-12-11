@@ -3,15 +3,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router  = express.Router();
 
-const Project = require('../models/project-model');
-const Task = require('../models/task-model'); 
+const Habit = require('../models/habit');
 
 
-// POST '/projects'
-router.post('/projects', (req,res) => {
-  const { title, description } = req.body;
+// POST '/habits'
+router.post('/', (req,res) => {
+  const { img, title, description } = req.body;
 
-  Project.create({ title, description, tasks: [] })
+  Habit.create({ img, title, description, days: [] })
     .then((response)=> {
       res
         .status(201)
@@ -25,11 +24,11 @@ router.post('/projects', (req,res) => {
     })
 })
 
-// GET '/projects'		 => to get all the projects
-router.get('/projects', (req, res, next) => {
-  Project.find().populate('tasks')
-    .then(allTheProjects => {
-      res.json(allTheProjects);
+// GET '/habits'		 => to get all the habits
+router.get('/', (req, res, next) => {
+  Habit.find().populate('days')
+    .then(allTheHabits => {
+      res.json(allTheHabits);
     })
     .catch(err => {
       res.json(err);
@@ -37,8 +36,8 @@ router.get('/projects', (req, res, next) => {
 });
 
 
-// GET '/api/projects/:id'		 => to get a specific projects
-router.get('/projects/:id', (req, res) => {
+// GET '/api/habits/:id'		 => to get a specific habits
+router.get('/:id', (req, res) => {
   const { id } = req.params;
 
   if ( !mongoose.Types.ObjectId.isValid(id)) {
@@ -48,9 +47,9 @@ router.get('/projects/:id', (req, res) => {
     return;
   }
 
-  Project.findById( id ).populate('tasks')
-    .then( (foundProject) => {
-      res.status(200).json(foundProject);
+  Habit.findById( id ).populate('days')
+    .then( (foundHabit) => {
+      res.status(200).json(foundHabit);
     })
     .catch((err) => {
       res.res.status(500).json(err);
@@ -59,17 +58,17 @@ router.get('/projects/:id', (req, res) => {
 
 
 
-// PUT '/api/projects/:id' 		=> to update a specific project
-router.put('/projects/:id', (req, res, next)=>{
+// PUT '/api/habits/:id' 		=> to update a specific habit
+router.put('/:id', (req, res, next)=>{
 
   if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({ message: 'Specified id is not valid' });
     return;
   }
 
-  Project.findByIdAndUpdate(req.params.id, req.body)
+  Habit.findByIdAndUpdate(req.params.id, req.body)
     .then(() => {
-      res.json({ message: `Project with ${req.params.id} is updated successfully.` });
+      res.json({ message: `Habit with ${req.params.id} is updated successfully.` });
     })
     .catch(err => {
       res.json(err);
@@ -77,8 +76,8 @@ router.put('/projects/:id', (req, res, next)=>{
 })
 
 
-// DELETE '/api/projects/:id'   => to delete a specific project
-router.delete('/projects/:id', (req, res)=>{
+// DELETE '/api/habits/:id'   => to delete a specific project
+router.delete('/:id', (req, res)=>{
   const { id } = req.params;
 
   if ( !mongoose.Types.ObjectId.isValid(id)) {
@@ -86,11 +85,11 @@ router.delete('/projects/:id', (req, res)=>{
     return;
   }
 
-  Project.findByIdAndRemove(id)
+  Habit.findByIdAndRemove(id)
     .then(() => {
       res
         .status(202)  //  Accepted
-        .json({ message: `Project with ${id} was removed successfully.` });
+        .json({ message: `Habit with ${id} was removed successfully.` });
     })
     .catch( err => {
       res.status(500).json(err);
