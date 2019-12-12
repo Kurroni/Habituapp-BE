@@ -165,9 +165,9 @@ habit={
 | POST        | `/auth/login`                 | {username, password}         | 200            | 401          | Checks if fields not empty (422), if user exists (404), and if password matches (404), then stores user in session |
 | POST        | `/auth/logout`                | (empty)                      | 204            | 400          | Logs out the user                                            |
 | GET         | `/habits`                |                              |                | 400          | Show all user's habits                                         |
-| GET         | `/habits/:id`            | {id}                         |                |              | Show specific tournament                                     |
+| GET         | `/habits/:id`            | {id}                         |                |              | Show specific habit                                     |
 | POST        | `/habits` | {}                           | 201            | 400          | Create and save a new habit                             |
-| PUT         | `/habits/edit/:id`       | {image, title, description}           | 200            | 400          | edit tournament                                              |
+| PUT         | `/habits/edit/:id`       | {image, title, description}           | 200            | 400          | edit habit                                              |
 | DELETE      | `/habits/delete/:id`     | {id}                         | 201            | 400          | delete habit                                            |
 
 <br>
