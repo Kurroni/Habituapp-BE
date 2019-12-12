@@ -12,6 +12,8 @@ require('dotenv').config();
 const auth = require('./routes/authRoute');
 const habits = require('./routes/habitsRoute');
 const user = require('./routes/userRoute');
+const cloudinary = require('./routes/cloudinaryRoute')
+
 
 
 // MONGOOSE CONNECTION
@@ -72,6 +74,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/auth', auth);
 app.use('/user', user);
 app.use('/habits', habits);
+app.use('/cloudinary', cloudinary);
 
 
 // ERROR HANDLING
