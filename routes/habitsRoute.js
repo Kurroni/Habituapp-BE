@@ -60,8 +60,8 @@ router.put("/:id", (req, res, next) => {
     res.status(400).json({ message: "Specified id is not valid" });
     return;
   }
-
-  Habit.findByIdAndUpdate(req.params.id, req.body)
+  const {img, title, description} = req.body;
+  Habit.findByIdAndUpdate(req.params.id, {$set:{img, title, description}})
     .then(() => {
       res.json({
         message: `Habit with ${req.params.id} is updated successfully.`
