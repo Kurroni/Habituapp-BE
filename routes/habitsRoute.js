@@ -3,7 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
 
-const Habit = require("../models/habitModel");
+const Habit = require("../models/HabitModel");
 
 // POST '/habits'
 router.post("/", (req, res) => {
