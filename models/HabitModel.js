@@ -5,7 +5,7 @@ const habitSchema = new Schema({
     img: {type: String, default:''},
     title: String,
     description: String,
-    days: [{date:Date, done: Boolean}]
+    days: [String]
   });
 
 const Habit = mongoose.model('Habit', habitSchema);

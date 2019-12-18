@@ -72,7 +72,27 @@ router.put("/:id", (req, res, next) => {
     });
 });
 
-// DELETE '/api/habits/:id'   => to delete a specific project
+
+router.put("/days/:id", (req, res, next) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.status(400).json({ message: "Specified id is not valid" });
+    return;
+  }
+  const {days} = req.body;
+  console.log(days);
+  
+  Habit.findByIdAndUpdate(req.params.id, {$set:{days:req.body.days}})
+    .then((habit) => {
+      console.log(habit);
+      
+      res.json(habit);
+    })
+    .catch(err => {
+      res.json(err);
+    });
+});
+
+// DELETE '/api/habits/:id'   => to delete a specific habit
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
 
