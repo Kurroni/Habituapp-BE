@@ -21,17 +21,7 @@ router.post("/", (req, res) => {
     });
 });
 
-// GET '/habits'		 => to get all the habits
-router.get("/", (req, res, next) => {
-  Habit.find()
-    .populate("days")
-    .then(allTheHabits => {
-      res.json(allTheHabits);
-    })
-    .catch(err => {
-      res.json(err);
-    });
-});
+
 
 // GET '/api/habits/:id'		 => to get a specific habits
 router.get("/:id", (req, res) => {
@@ -45,12 +35,11 @@ router.get("/:id", (req, res) => {
   }
 
   Habit.findById(id)
-    .populate("days")
     .then(foundHabit => {
       res.status(200).json(foundHabit);
     })
     .catch(err => {
-      res.res.status(500).json(err);
+      res.status(500).json(err);
     });
 });
 
@@ -109,6 +98,19 @@ router.delete("/:id", (req, res) => {
     })
     .catch(err => {
       res.status(500).json(err);
+    });
+});
+
+
+// GET '/habits'		 => to get all the habits
+router.get("/", (req, res, next) => {
+  Habit.find()
+    .populate("days")
+    .then(allTheHabits => {
+      res.json(allTheHabits);
+    })
+    .catch(err => {
+      res.json(err);
     });
 });
 
