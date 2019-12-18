@@ -101,7 +101,7 @@ router.delete("/:id", (req, res) => {
     return;
   }
 
-  Habit.findByIdAndRemove(id)
+  Habit.findByIdAndDelete(id)
     .then(() => {
       res
         .status(202) //  Accepted
