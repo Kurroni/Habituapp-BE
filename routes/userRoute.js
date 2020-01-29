@@ -7,8 +7,6 @@ const User = require("../models/UserModel");
 //PUT 'user/:id'
 router.put("/:id", (req, res, next) => {
 
-  console.log('TEST', req.params.id)
-
   const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
       res.status(400).json({ message: "Specified id is not valid" });
@@ -17,15 +15,13 @@ router.put("/:id", (req, res, next) => {
     
     User.findByIdAndUpdate(req.params.id, {$push: {habits: req.body.habitsId}})
       .then(() => {
-        console.log('something');
-        
+               
         res.json({
           message: `Habit with ${req.params.id} is updated successfully.`
         });
       })
       .catch(err => {
-        console.log('res.jason');
-        
+                
         res.json(err);
       });
   });
