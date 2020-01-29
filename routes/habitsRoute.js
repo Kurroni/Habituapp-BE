@@ -68,12 +68,10 @@ router.put("/days/:id", (req, res, next) => {
     return;
   }
   const {days} = req.body;
-  console.log(days);
   
   Habit.findByIdAndUpdate(req.params.id, {$set:{days:req.body.days}})
     .then((habit) => {
-      console.log(habit);
-      
+          
       res.json(habit);
     })
     .catch(err => {
